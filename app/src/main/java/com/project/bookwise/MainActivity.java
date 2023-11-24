@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         library.addBook(newBook);
 
         // Borrow the book for the user
-        user.borrowBook(library, newBook);
+        library.checkoutBook(newBook, user);
 
         // Update the bookList and notify the adapter
         bookList.add(newBook);
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             Book bookToReturn = user.getBorrowedBooks().get(0);
 
             // Return the book to the library
-            user.returnBook(library, bookToReturn);
+            library.returnBook(bookToReturn, user);
 
             // Update the bookList and notify the adapter
             bookList.remove(bookToReturn);

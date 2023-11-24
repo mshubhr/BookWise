@@ -1,9 +1,10 @@
 package com.project.bookwise;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
     private String username;
     private List<Book> borrowedBooks;
 
@@ -20,22 +21,14 @@ public class User {
         return borrowedBooks;
     }
 
-    public void borrowBook(Library library, Book book) {
-        if (library.checkoutBook(book, this)) {
-            borrowedBooks.add(book);
-            System.out.println("Book '" + book.getTitle() + "' borrowed by " + username);
-        } else {
-            System.out.println("Book '" + book.getTitle() + "' is not available for borrowing.");
-        }
+    public void borrowBook(Book book) {
+        borrowedBooks.add(book);
+        System.out.println("Book '" + book.getTitle() + "' borrowed by " + username);
     }
 
-    public void returnBook(Library library, Book book) {
-        if (library.returnBook(book, this)) {
-            borrowedBooks.remove(book);
-            System.out.println("Book '" + book.getTitle() + "' returned by " + username);
-        } else {
-            System.out.println("You did not borrow this book from the library.");
-        }
+    public void returnBook(Book book) {
+        borrowedBooks.remove(book);
+        System.out.println("Book '" + book.getTitle() + "' returned by " + username);
     }
 
     @Override

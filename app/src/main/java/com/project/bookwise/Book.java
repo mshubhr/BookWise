@@ -1,8 +1,9 @@
 package com.project.bookwise;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Book {
+public class Book implements Serializable {
     private String title;
     private String author;
     private boolean available;

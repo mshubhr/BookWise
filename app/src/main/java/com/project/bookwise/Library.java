@@ -1,15 +1,20 @@
 package com.project.bookwise;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Library {
+public class Library implements Serializable {
     private List<Book> books;
     private List<User> users;
+    private static final String BOOKS_FILE = "books.dat";
+    private static final String USERS_FILE = "users.dat";
 
     public Library() {
         this.books = new ArrayList<>();
         this.users = new ArrayList<>();
+        loadBooks();
+        loadUsers();
     }
 
     public List<Book> getBooks() {
@@ -25,30 +30,63 @@ public class Library {
         System.out.println("Book added to the library: " + book.getTitle());
     }
 
-    public void removeBook(Book book) {
-        if (books.remove(book)) {
-            System.out.println("Book removed from the library: " + book.getTitle());
-        } else {
-            System.out.println("Book not found in the library.");
+    public void saveBooks() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(BOOKS_FILE))) {
+            oos.writeObject(books);
+            System.out.println("Books saved to file.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error saving books to file.");
         }
     }
 
-    public void addUser(User user) {
-        users.add(user);
-        System.out.println("User added to the library: " + user.getUsername());
-    }
-
-    public void removeUser(User user) {
-        if (users.remove(user)) {
-            System.out.println("User removed from the library: " + user.getUsername());
-        } else {
-            System.out.println("User not found in the library.");
+    // Load books from file
+    private void loadBooks() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(BOOKS_FILE))) {
+            Object obj = ois.readObject();
+            if (obj instanceof List) {
+                books = (List<Book>) obj;
+                System.out.println("Books loaded from file.");
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            // Handle file not found or class not found exceptions
+            System.err.println("Error loading books from file. Starting with an empty library.");
+            books = new ArrayList<>();
         }
     }
 
+    // Save users to file
+    public void saveUsers() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(USERS_FILE))) {
+            oos.writeObject(users);
+            System.out.println("Users saved to file.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error saving users to file.");
+        }
+    }
+
+    // Load users from file
+    private void loadUsers() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(USERS_FILE))) {
+            Object obj = ois.readObject();
+            if (obj instanceof List) {
+                users = (List<User>) obj;
+                System.out.println("Users loaded from file.");
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            // Handle file not found or class not found exceptions
+            System.err.println("Error loading users from file. Starting with an empty user list.");
+            users = new ArrayList<>();
+        }
+    }
+
+    // New method: Checkout a book
     public boolean checkoutBook(Book book, User user) {
         if (book.isAvailable()) {
             book.setAvailable(false);
+            user.borrowBook(book);
+            System.out.println("Book '" + book.getTitle() + "' checked out by " + user.getUsername());
             return true;
         } else {
             System.out.println("Book '" + book.getTitle() + "' is not available for borrowing.");
@@ -56,35 +94,16 @@ public class Library {
         }
     }
 
+    // New method: Return a book
     public boolean returnBook(Book book, User user) {
         if (user.getBorrowedBooks().contains(book)) {
             book.setAvailable(true);
+            user.returnBook(book);
+            System.out.println("Book '" + book.getTitle() + "' returned by " + user.getUsername());
             return true;
         } else {
             System.out.println("You did not borrow this book from the library.");
             return false;
         }
-    }
-
-    public void displayBooks() {
-        System.out.println("Books in the library:");
-        for (Book book : books) {
-            System.out.println(book);
-        }
-    }
-
-    public void displayUsers() {
-        System.out.println("Users in the library:");
-        for (User user : users) {
-            System.out.println(user);
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "Library{" +
-                "books=" + books +
-                ", users=" + users +
-                '}';
     }
 }
