@@ -12,7 +12,6 @@ public class User {
         this.borrowedBooks = new ArrayList<>();
     }
 
-    // Getter methods
     public String getUsername() {
         return username;
     }
@@ -21,28 +20,24 @@ public class User {
         return borrowedBooks;
     }
 
-    // Methods for borrowing and returning books
-    public void borrowBook(Book book) {
-        if (book.isAvailable()) {
+    public void borrowBook(Library library, Book book) {
+        if (library.checkoutBook(book, this)) {
             borrowedBooks.add(book);
-            book.setAvailable(false);
             System.out.println("Book '" + book.getTitle() + "' borrowed by " + username);
         } else {
             System.out.println("Book '" + book.getTitle() + "' is not available for borrowing.");
         }
     }
 
-    public void returnBook(Book book) {
-        if (borrowedBooks.contains(book)) {
+    public void returnBook(Library library, Book book) {
+        if (library.returnBook(book, this)) {
             borrowedBooks.remove(book);
-            book.setAvailable(true);
             System.out.println("Book '" + book.getTitle() + "' returned by " + username);
         } else {
-            System.out.println("You did not borrow this book.");
+            System.out.println("You did not borrow this book from the library.");
         }
     }
 
-    // Override toString for user-friendly representation
     @Override
     public String toString() {
         return "User{" +

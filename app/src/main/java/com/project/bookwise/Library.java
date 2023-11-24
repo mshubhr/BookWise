@@ -12,8 +12,6 @@ public class Library {
         this.users = new ArrayList<>();
     }
 
-    // Getter methods
-
     public List<Book> getBooks() {
         return books;
     }
@@ -21,8 +19,6 @@ public class Library {
     public List<User> getUsers() {
         return users;
     }
-
-    // Methods for adding and removing books/users
 
     public void addBook(Book book) {
         books.add(book);
@@ -50,7 +46,25 @@ public class Library {
         }
     }
 
-    // Other methods for library functionality
+    public boolean checkoutBook(Book book, User user) {
+        if (book.isAvailable()) {
+            book.setAvailable(false);
+            return true;
+        } else {
+            System.out.println("Book '" + book.getTitle() + "' is not available for borrowing.");
+            return false;
+        }
+    }
+
+    public boolean returnBook(Book book, User user) {
+        if (user.getBorrowedBooks().contains(book)) {
+            book.setAvailable(true);
+            return true;
+        } else {
+            System.out.println("You did not borrow this book from the library.");
+            return false;
+        }
+    }
 
     public void displayBooks() {
         System.out.println("Books in the library:");
@@ -59,20 +73,13 @@ public class Library {
         }
     }
 
-    // Method to allow users to add new books
-    public void userAddBook(User user, Book book) {
-        if (users.contains(user)) {
-            if (!books.contains(book)) {
-                addBook(book);
-            } else {
-                System.out.println("Book already exists in the library.");
-            }
-        } else {
-            System.out.println("User not found in the library. Please add the user first.");
+    public void displayUsers() {
+        System.out.println("Users in the library:");
+        for (User user : users) {
+            System.out.println(user);
         }
     }
 
-    // Override toString for user-friendly representation
     @Override
     public String toString() {
         return "Library{" +

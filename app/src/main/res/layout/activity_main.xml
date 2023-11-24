@@ -3,36 +3,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Book Title"/>
+        android:text="Book Title"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
 
     <TextView
         android:id="@+id/authorTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Author"/>
+        android:text="Author"
+        android:textSize="16sp"
+        android:layout_below="@id/titleTextView"
+        android:layout_marginBottom="16dp"/>
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/addButton"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_below="@id/authorTextView"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="1dp"
-        android:padding="16dp" />
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:clipToPadding="false"/>
 
     <Button
         android:id="@+id/addButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
+        android:layout_below="@id/listView"
+        android:layout_marginTop="16dp"
         android:text="Add Book" />
+
+    <Button
+        android:id="@+id/returnButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addButton"
+        android:layout_marginTop="8dp"
+        android:text="Return Book" />
 
 </RelativeLayout>
