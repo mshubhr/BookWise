@@ -30,16 +30,6 @@ public class Library implements Serializable {
         System.out.println("Book added to the library: " + book.getTitle());
     }
 
-    public void saveBooks() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(BOOKS_FILE))) {
-            oos.writeObject(books);
-            System.out.println("Books saved to file.");
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error saving books to file.");
-        }
-    }
-
     // Load books from file
     private void loadBooks() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(BOOKS_FILE))) {

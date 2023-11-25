@@ -1,11 +1,13 @@
 package com.project.bookwise;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 public class Book implements Serializable {
-    private String title;
-    private String author;
+    private final String title;
+    private final String author;
     private boolean available;
 
     public Book(String title, String author) {
@@ -47,6 +49,7 @@ public class Book implements Serializable {
         return Objects.hash(title, author);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Book{" +

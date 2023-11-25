@@ -1,10 +1,11 @@
 package com.project.bookwise;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,20 +31,10 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(bookAdapter);
 
         Button addButton = findViewById(R.id.addButton);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addAndBorrowBook();
-            }
-        });
+        addButton.setOnClickListener(v -> addAndBorrowBook());
 
         Button returnButton = findViewById(R.id.returnButton);
-        returnButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                returnBook();
-            }
-        });
+        returnButton.setOnClickListener(v -> returnBook());
     }
 
     private void addAndBorrowBook() {

@@ -1,12 +1,14 @@
 package com.project.bookwise;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class User implements Serializable {
-    private String username;
-    private List<Book> borrowedBooks;
+    private final String username;
+    private final List<Book> borrowedBooks;
 
     public User(String username) {
         this.username = username;
@@ -31,6 +33,7 @@ public class User implements Serializable {
         System.out.println("Book '" + book.getTitle() + "' returned by " + username);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "User{" +
