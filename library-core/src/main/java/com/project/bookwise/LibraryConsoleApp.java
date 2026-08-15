@@ -20,7 +20,7 @@ public class LibraryConsoleApp {
                 choice = scanner.nextInt();
             } catch (Exception e) {
                 System.out.println("Invalid input. Please enter a number.");
-                scanner.nextLine(); // Consume the invalid input
+                scanner.nextLine();
                 continue;
             }
 
